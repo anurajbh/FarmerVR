@@ -1,0 +1,16 @@
+{
+  "source": "Unity",
+  "applications": [
+    {
+      "app_key": "application.generated.unity.farmervr.exe",
+      "launch_type": "url",
+      "url": "steam://launch/",
+      "action_manifest_path": "C:\\Users\\abhatnagar45\\Project\\FarmerVR\\actions.json",
+      "strings": {
+        "en_us": {
+          "name": "FarmerVR [Testing]"
+        }
+      }
+    }
+  ]
+}
