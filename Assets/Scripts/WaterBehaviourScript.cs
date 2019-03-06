@@ -7,6 +7,7 @@ public class WaterBehaviourScript : MonoBehaviour
     [SerializeField] GameObject waterSphere;
     [SerializeField] Rigidbody waterBody;
     [SerializeField] MeshRenderer water;
+    [SerializeField] float dropTime = 3f;
     Vector3 startPos;
     void Start()
     {
@@ -26,7 +27,7 @@ public class WaterBehaviourScript : MonoBehaviour
         {
             waterBody.useGravity = true;
             waterBody.isKinematic = false;
-            Invoke("moveBackToOriginal", 5f);
+            Invoke("moveBackToOriginal", dropTime);
             
         }
     }
