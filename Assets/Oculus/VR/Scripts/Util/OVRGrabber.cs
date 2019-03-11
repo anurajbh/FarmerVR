@@ -50,6 +50,8 @@ public class OVRGrabber : MonoBehaviour
     [SerializeField]
     protected Transform m_parentTransform;
 
+    [SerializeField] Collider col;
+
     protected bool m_grabVolumeEnabled = true;
     protected Vector3 m_lastPos;
     protected Quaternion m_lastRot;
@@ -163,6 +165,8 @@ public class OVRGrabber : MonoBehaviour
     {
         // Get the grab trigger
 		OVRGrabbable grabbable = otherCollider.GetComponent<OVRGrabbable>() ?? otherCollider.GetComponentInParent<OVRGrabbable>();
+        print(otherCollider.name);
+        Physics.IgnoreCollision(otherCollider, col);
         if (grabbable == null) return;
 
         // Add the grabbable

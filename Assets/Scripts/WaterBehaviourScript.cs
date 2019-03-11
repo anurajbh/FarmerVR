@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class WaterBehaviourScript : MonoBehaviour
 {
+    [SerializeField] AudioSource aud;
     [SerializeField] GameObject waterSphere;
     [SerializeField] GameObject lever;
     [SerializeField] Rigidbody waterBody;
@@ -33,6 +34,7 @@ public class WaterBehaviourScript : MonoBehaviour
     }
     public void OnTriggerEnter(Collider other)
     {
+        aud.Play();
         print("Water is flowing");
         if(other.tag == "Player")
         {
@@ -41,6 +43,10 @@ public class WaterBehaviourScript : MonoBehaviour
            // lever.transform.Rotate(startLeverRotX, startLeverRotY, rotateZ);
             Invoke("moveBackToOriginal", dropTime);
         }
+    }
+    public void OnTriggerExit(Collider other)
+    {
+        aud.Stop();
     }
     public void moveBackToOriginal()
     {
