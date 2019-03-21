@@ -8,7 +8,7 @@ public class ThudHandler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -19,6 +19,7 @@ public class ThudHandler : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         audioSource.Play();
+        print("Hello there");
     }
     private void OnTriggerExit(Collider other)
     {
