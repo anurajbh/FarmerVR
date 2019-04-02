@@ -6,7 +6,7 @@ using Valve.VR;
 public class ControllerHandler : MonoBehaviour
 {
     [SerializeField] SteamVR_Action_Boolean m_GrabAction;
-
+    public bool pickedUp = false;
     private SteamVR_Behaviour_Pose m_Pose = null;
     private FixedJoint m_Joint = null;//fixed joint to attach the interactable to
     Rigidbody targetBody;
@@ -69,6 +69,7 @@ public class ControllerHandler : MonoBehaviour
         m_Joint.connectedBody = targetBody;
         //Set active hand
         m_CurrentInteractable.m_CurrentHand = this;
+        pickedUp = true;
     }
     public void Drop()
     {
