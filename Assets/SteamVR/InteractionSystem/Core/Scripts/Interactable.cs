@@ -14,7 +14,6 @@ namespace Valve.VR.InteractionSystem
     //-------------------------------------------------------------------------
     public class Interactable : MonoBehaviour
     {
-        public bool pickedUp = false;
         [Tooltip("Activates an action set on attach and deactivates on detach")]
         public SteamVR_ActionSet activateActionSetOnAttach;
 
@@ -274,7 +273,6 @@ namespace Valve.VR.InteractionSystem
 
         protected virtual void OnAttachedToHand(Hand hand)
         {
-
             if (activateActionSetOnAttach != null)
                 activateActionSetOnAttach.Activate(hand.handType);
 
@@ -346,8 +344,5 @@ namespace Valve.VR.InteractionSystem
             if (highlightHolder != null)
                 Destroy(highlightHolder);
         }
-        
-        
     }
-    
 }
