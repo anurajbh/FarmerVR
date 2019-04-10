@@ -15,7 +15,9 @@ namespace Valve.VR.InteractionSystem
 	[RequireComponent( typeof( Interactable ) )]
 	public class CircularDrive : MonoBehaviour
 	{
-		public enum Axis_t
+        public Quaternion originalRotationValue; // declare this as a Quaternion
+        float rotationResetSpeed = 1.0f;
+        public enum Axis_t
 		{
 			XAxis,
 			YAxis,
@@ -131,7 +133,8 @@ namespace Valve.VR.InteractionSystem
         //-------------------------------------------------
         private void Start()
 		{
-			if ( childCollider == null )
+            originalRotationValue = transform.rotation;
+            if ( childCollider == null )
 			{
 				childCollider = GetComponentInChildren<Collider>();
 			}
@@ -266,8 +269,10 @@ namespace Valve.VR.InteractionSystem
 			}
             else if (grabbedWithType != GrabTypes.None && isGrabEnding)
 			{
-				// Trigger was just released
-				if ( hoverLock )
+                // Trigger was just released
+                //reset rotation-Deviation from the SteamVR builtin Script so that our handle's rotation would be reset
+                transform.rotation = Quaternion.Slerp(transform.rotation, originalRotationValue, Time.time * rotationResetSpeed);
+                if ( hoverLock )
 				{
 					hand.HoverUnlock(interactable);
 					handHoverLocked = null;
@@ -495,12 +500,14 @@ namespace Valve.VR.InteractionSystem
 
 							if ( outAngle == minAngle )
 							{
-								if ( angleTmp > minAngle && absAngleDelta < minMaxAngularThreshold )
+                                
+                                if ( angleTmp > minAngle && absAngleDelta < minMaxAngularThreshold )
 								{
 									outAngle = angleTmp;
 									lastHandProjected = toHandProjected;
 								}
-							}
+                                
+                            }
 							else if ( outAngle == maxAngle )
 							{
 								if ( angleTmp < maxAngle && absAngleDelta < minMaxAngularThreshold )
@@ -518,7 +525,8 @@ namespace Valve.VR.InteractionSystem
 								{
 									Freeze( hand );
 								}
-							}
+                                
+                            }
 							else if ( angleTmp == maxAngle )
 							{
 								outAngle = angleTmp;
