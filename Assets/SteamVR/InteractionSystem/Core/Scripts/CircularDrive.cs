@@ -10,12 +10,12 @@ using System.Collections;
 
 namespace Valve.VR.InteractionSystem
 {
-
-	//-------------------------------------------------------------------------
-	[RequireComponent( typeof( Interactable ) )]
+    //-------------------------------------------------------------------------
+    [RequireComponent( typeof( Interactable ) )]
 	public class CircularDrive : MonoBehaviour
 	{
         public Quaternion originalRotationValue; // declare this as a Quaternion
+        public Transform toRevertTo;
         float rotationResetSpeed = 1.0f;
         public enum Axis_t
 		{
@@ -24,6 +24,7 @@ namespace Valve.VR.InteractionSystem
 			ZAxis
 		};
 
+        public bool turnedOff = true;
 		[Tooltip( "The axis around which the circular drive will rotate in local space" )]
 		public Axis_t axisOfRotation = Axis_t.XAxis;
 
@@ -133,7 +134,7 @@ namespace Valve.VR.InteractionSystem
         //-------------------------------------------------
         private void Start()
 		{
-            originalRotationValue = transform.rotation;
+            originalRotationValue = toRevertTo.rotation;
             if ( childCollider == null )
 			{
 				childCollider = GetComponentInChildren<Collider>();
@@ -252,6 +253,7 @@ namespace Valve.VR.InteractionSystem
             {
                 grabbedWithType = startingGrabType;
                 // Trigger was just pressed
+                turnedOff = false;
                 lastHandProjected = ComputeToTransformProjected( hand.hoverSphereTransform );
 
 				if ( hoverLock )
@@ -270,6 +272,7 @@ namespace Valve.VR.InteractionSystem
             else if (grabbedWithType != GrabTypes.None && isGrabEnding)
 			{
                 // Trigger was just released
+                turnedOff = true;
                 //reset rotation-Deviation from the SteamVR builtin Script so that our handle's rotation would be reset
                 transform.rotation = Quaternion.Slerp(transform.rotation, originalRotationValue, Time.time * rotationResetSpeed);
                 if ( hoverLock )
