@@ -5,7 +5,7 @@
       "app_key": "application.generated.unity.wiltedflowerswiltedlives.exe",
       "launch_type": "url",
       "url": "steam://launch/",
-      "action_manifest_path": "C:\\Users\\abhatnagar45\\Project\\WiltedFlowers_WiltedLives\\actions.json",
+      "action_manifest_path": "C:\\Users\\abhatnagar45\\Project\\FarmerVR\\actions.json",
       "strings": {
         "en_us": {
           "name": "WiltedFlowers,WiltedLives [Testing]"
