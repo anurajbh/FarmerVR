@@ -24,7 +24,7 @@ public class WaterController : MonoBehaviour
         }
         else
         {
-            emitter.speed = 0f;
+            emitter.speed = 0.0f;
         }
     }
 
