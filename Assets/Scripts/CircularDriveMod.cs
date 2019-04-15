@@ -1,16 +1,14 @@
-﻿//======= Copyright (c) Valve Corporation, All rights reserved. ===============
-//
-// Purpose: Interactable that can be used to move in a circular motion
-//
-//=============================================================================
+﻿//Note- This is a modification of Valve SteamVR Circular Drive script, with the intention of tying the Circular Drive to activate other ingame Objects.
+
 
 using UnityEngine;
 using UnityEngine.Events;
 using System.Collections;
 using System;
 using Valve.VR.InteractionSystem;
-    //-------------------------------------------------------------------------
-    [RequireComponent(typeof(Interactable))]
+using UnityEngine.Playables;
+//-------------------------------------------------------------------------
+[RequireComponent(typeof(Interactable))]
     public class CircularDriveMod : MonoBehaviour
     {
         public enum Axis_t
@@ -19,8 +17,12 @@ using Valve.VR.InteractionSystem;
             YAxis,
             ZAxis
         };
-        [SerializeField] bool isActive = false;
-        [SerializeField] float timer = 0.0f;
+    //Mdifications were made in  this code for the intention of making Radha work
+    [SerializeField] bool isActive = false;//boolean check
+    [SerializeField] float timer = 0.0f;//timer to activate function
+    [SerializeField] float timer2 = 0.0f;//timer to activate function
+    [SerializeField] GameObject radha;
+    PlayableDirector radhaPlay;
         [Tooltip("The axis around which the circular drive will rotate in local space")]
         public Axis_t axisOfRotation = Axis_t.XAxis;
 
@@ -548,22 +550,36 @@ using Valve.VR.InteractionSystem;
                 }
             }
         }
-        private void Update()
+    private void Update()
+    {
+        if(isActive)
         {
-            if(isActive)
-            {
-                timer += Time.deltaTime;
+            timer += Time.deltaTime;
                 
-            }
-            if(timer>=5.0f)
-            {
-                BreakBucket();
-            }
         }
-
-        private void BreakBucket()
+        if(timer>=5.0f)
         {
-            print("Hello there");
+            radhaPlay = radha.GetComponent<PlayableDirector>();
+            BreakBucket();
+            setRadha();
+            timer2 = 0f;
+            timer2 += Time.deltaTime;
         }
     }
+
+    private void BreakBucket()
+    {
+        print("Hello there");
+    }
+
+    private void setRadha()
+    {
+        radha.SetActive(true);
+        radhaPlay.enabled = true;
+        if(timer2>=25f)
+        {
+            radha.SetActive(false);
+        }
+    }
+}
 

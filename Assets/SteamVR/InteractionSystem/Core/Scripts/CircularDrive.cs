@@ -11,12 +11,13 @@ using System.Collections;
 namespace Valve.VR.InteractionSystem
 {
     //-------------------------------------------------------------------------
+    //Note- This script has been modified, for educational purposes, to have the drive revert to a particular position on release of trigger
     [RequireComponent(typeof(Interactable))]
     public class CircularDrive : MonoBehaviour
     {
-        public Quaternion originalRotationValue; // declare this as a Quaternion
-        public Transform toRevertTo;
-        float rotationResetSpeed = 1.0f;
+        public Quaternion originalRotationValue;//Modification 1
+        public Transform toRevertTo;//Modification 2
+        float rotationResetSpeed = 1.0f;//Modification 3
         public enum Axis_t
         {
             XAxis,
