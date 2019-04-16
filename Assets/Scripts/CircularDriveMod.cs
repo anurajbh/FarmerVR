@@ -19,8 +19,12 @@ using UnityEngine.Playables;
         };
     //Mdifications were made in  this code for the intention of making Radha work
     [SerializeField] bool isActive = false;//boolean check
+    [SerializeField] bool breakIt = false;
     [SerializeField] float timer = 0.0f;//timer to activate function
     [SerializeField] float timer2 = 0.0f;//timer to activate function
+    [SerializeField] AudioSource aud;//for wheel turn
+    [SerializeField] AudioClip wheel;//wheel clip
+    [SerializeField] AudioClip breakBucketSound;
     [SerializeField] GameObject radha;
     PlayableDirector radhaPlay;
         [Tooltip("The axis around which the circular drive will rotate in local space")]
@@ -132,6 +136,7 @@ using UnityEngine.Playables;
         //-------------------------------------------------
         private void Start()
         {
+            timer2 = 0f;
             if (childCollider == null)
             {
                 childCollider = GetComponentInChildren<Collider>();
@@ -251,6 +256,7 @@ using UnityEngine.Playables;
                 grabbedWithType = startingGrabType;
                 // Trigger was just pressed
                 isActive = true;
+                
                 lastHandProjected = ComputeToTransformProjected(hand.hoverSphereTransform);
 
                 if (hoverLock)
@@ -269,8 +275,8 @@ using UnityEngine.Playables;
             else if (grabbedWithType != GrabTypes.None && isGrabEnding)
             {
                 isActive = false;
-                // Trigger was just released
-                if (hoverLock)
+            // Trigger was just released
+            if (hoverLock)
                 {
                     hand.HoverUnlock(interactable);
                     handHoverLocked = null;
@@ -552,25 +558,60 @@ using UnityEngine.Playables;
         }
     private void Update()
     {
-        if(isActive)
+        if (isActive)
         {
             timer += Time.deltaTime;
-                
+            if (timer < 5.0f)
+            {
+                if (!aud.isPlaying)
+                {
+                    aud.PlayOneShot(wheel, 1f);
+                }
+
+            }
+            else
+            {
+                if(timer<5.5f)
+                {
+                    aud.Stop();
+                }
+                breakIt = true;
+            }
+
         }
-        if(timer>=5.0f)
+        else if(!isActive)
         {
+            aud.Stop();
+        }
+        if(timer>5.5f)
+        {
+            
             radhaPlay = radha.GetComponent<PlayableDirector>();
             BreakBucket();
-            setRadha();
-            timer2 = 0f;
             timer2 += Time.deltaTime;
+        }
+        if(timer>10.0f)
+        {
+            setRadha();
         }
     }
 
     private void BreakBucket()
     {
-        print("Hello there");
+        if(breakIt)
+        {
+            if (!aud.isPlaying)
+            {
+
+                if (timer < 10.0f)
+                {
+                    aud.PlayOneShot(breakBucketSound, 1f);
+                }
+            }
+        }
+        
     }
+
 
     private void setRadha()
     {

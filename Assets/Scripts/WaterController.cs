@@ -10,7 +10,12 @@ public class WaterController : MonoBehaviour
 {
     public CircularDrive circularDrive;
     public Obi.ObiEmitter emitter;
+    AudioSource audi;
     // Update is called once per frame
+    private void Start()
+    {
+        audi = GetComponent<AudioSource>();
+    }
     void Update()
     {
         CheckForSolver();
@@ -20,11 +25,21 @@ public class WaterController : MonoBehaviour
     {
         if(!circularDrive.turnedOff)
         {
+            if (!audi.isPlaying)
+            {
+                audi.Play();
+            }
+
             emitter.speed = 0.1f;
         }
-        else
+        else if(circularDrive.turnedOff)
         {
+            audi.Stop();
             emitter.speed = 0.0f;
+        }
+        if(emitter.radhaIsActive)
+        {
+            audi.Stop();
         }
     }
 
