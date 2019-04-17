@@ -565,7 +565,9 @@ using UnityEngine.Playables;
             {
                 if (!aud.isPlaying)
                 {
-                    aud.PlayOneShot(wheel, 1f);
+                    aud.clip = wheel;
+                    aud.Play();
+                    //aud.PlayOneShot(wheel, 1f);
                 }
 
             }
@@ -573,7 +575,7 @@ using UnityEngine.Playables;
             {
                 if(timer<5.5f)
                 {
-                    aud.Stop();
+                    aud.Pause();
                 }
                 breakIt = true;
             }
@@ -581,7 +583,7 @@ using UnityEngine.Playables;
         }
         else if(!isActive)
         {
-            aud.Stop();
+            aud.Pause();
         }
         if(timer>5.5f)
         {
@@ -605,7 +607,8 @@ using UnityEngine.Playables;
 
                 if (timer < 10.0f)
                 {
-                    aud.PlayOneShot(breakBucketSound, 1f);
+                    aud.clip = breakBucketSound;
+                    aud.Play();
                 }
             }
         }
