@@ -591,11 +591,9 @@ using UnityEngine.Playables;
             radhaPlay = radha.GetComponent<PlayableDirector>();
             BreakBucket();
             timer2 += Time.deltaTime;
-        }
-        if(timer>10.0f)
-        {
             setRadha();
         }
+
     }
 
     private void BreakBucket()
