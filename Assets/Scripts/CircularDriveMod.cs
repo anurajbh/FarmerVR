@@ -608,6 +608,10 @@ using UnityEngine.Playables;
                     aud.clip = breakBucketSound;
                     aud.Play();
                 }
+                else if(timer > 10.0f)
+                {
+                    aud.Stop();
+                }
             }
         }
         
